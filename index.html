@@ -8,7 +8,12 @@
 
   <style>
 
-    /* ===== BODY (CENTERING FIX) ===== */
+    /* 🔥 FIX OVERFLOW ISSUE */
+    * {
+      box-sizing: border-box;
+    }
+
+    /* ===== BODY ===== */
     body {
       margin: 0;
       font-family: Arial, sans-serif;
@@ -23,15 +28,16 @@
 
     /* ===== LOGO ===== */
     .logo {
-      position: fixed;
-      top: 15px;
-      left: 20px;
-      width: 90px;
+      display: block;
+      margin: 0 auto 10px auto;
+      width: 100%;
+      
     }
 
-    /* ===== FORM CONTAINER ===== */
+    /* ===== CONTAINER ===== */
     .container {
       width: 60%;
+      max-width: 600px;
       background: #0a192f;
       padding: 30px;
       border-radius: 12px;
@@ -59,7 +65,7 @@
       color: #aaa;
     }
 
-    /* ===== ROW (2 fields in one line) ===== */
+    /* ===== ROW ===== */
     .row {
       display: flex;
       gap: 10px;
@@ -86,16 +92,17 @@
       background: #d4af37;
     }
 
-    /* ===== MOBILE VIEW ===== */
+    /* ===== MOBILE FIX ===== */
     @media (max-width: 768px) {
 
       body {
-        align-items: flex-start;
-        padding-top: 80px;
+        display: block;              /* remove flex */
+        padding: 80px 10px 20px;    /* equal spacing */
       }
 
       .container {
-        width: 90%;
+        width: 100%;
+        margin: 0 auto;             /* center properly */
         padding: 20px;
       }
 
@@ -121,13 +128,14 @@
 
 <body>
 
-<!-- ===== LOGO (ADD YOUR IMAGE FILE) ===== -->
-<img src="logo.png" class="logo">
 
 <div class="container">
 
+  <!-- ===== LOGO ===== -->
+<img src="logo.png" class="logo">
+
   <!-- ===== TITLE ===== -->
-  <h1>Jan Sabha Summit Registration</h1>
+  <h1>Registration Form</h1>
 
   <form id="form">
 
@@ -184,12 +192,11 @@
 
 document.getElementById("form").addEventListener("submit", async function(e) {
 
-  e.preventDefault(); // prevent reload
+  e.preventDefault();
 
-  /* 🔴 IMPORTANT: PASTE YOUR APPS SCRIPT URL HERE */
+  /* 🔴 PASTE YOUR GOOGLE APPS SCRIPT URL HERE */
   const scriptURL = "https://script.google.com/macros/s/AKfycbwEAV6O27LnKq_MQ5ePxaTdHS-zGe6FLL84rS9ooZsrj8h8PhCafCtnYDzuzDUp96Qhrg/exec";
 
-  /* ===== COLLECT DATA ===== */
   let data = {
     name: document.getElementById("name").value,
     year: document.getElementById("year").value,
@@ -205,7 +212,6 @@ document.getElementById("form").addEventListener("submit", async function(e) {
   };
 
   try {
-
     await fetch(scriptURL, {
       method: "POST",
       body: JSON.stringify(data)
