@@ -3,115 +3,225 @@
 <head>
   <title>JSS Registration</title>
 
+  <!-- 🔷 Makes it responsive on mobile -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <style>
+    /* ===== GLOBAL STYLING ===== */
     body {
-      background-color: #020c1b;
-      font-family: Arial;
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #020c1b; /* Dark blue */
       color: gold;
     }
 
+    /* ===== LOGO ===== */
+    .logo {
+      position: absolute;
+      top: 15px;
+      left: 20px;
+      width: 90px;
+    }
+
+    /* ===== MAIN CONTAINER ===== */
     .container {
       width: 60%;
       margin: auto;
       background: #0a192f;
       padding: 30px;
-      border-radius: 10px;
-      margin-top: 30px;
+      border-radius: 12px;
+      margin-top: 60px;
+      box-shadow: 0 0 20px rgba(255, 215, 0, 0.2);
     }
 
+    h1 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    /* ===== INPUTS ===== */
     input, select {
       width: 100%;
-      padding: 10px;
+      padding: 12px;
       margin: 10px 0;
       border: 1px solid gold;
       background: #020c1b;
       color: white;
+      border-radius: 6px;
+      font-size: 14px;
     }
 
+    input::placeholder {
+      color: #aaa;
+    }
+
+    /* ===== ROW (2 inputs side by side on desktop) ===== */
+    .row {
+      display: flex;
+      gap: 10px;
+    }
+
+    .row input {
+      width: 50%;
+    }
+
+    /* ===== BUTTON ===== */
     button {
       background: gold;
-      padding: 12px;
+      color: black;
+      padding: 14px;
       width: 100%;
       border: none;
+      font-weight: bold;
       cursor: pointer;
+      border-radius: 6px;
+      margin-top: 10px;
     }
 
-    .logo {
-      position: absolute;
-      top: 10px;
-      left: 20px;
-      width: 100px;
+    button:hover {
+      background: #d4af37;
     }
+
+    /* ===== MOBILE RESPONSIVE ===== */
+    @media (max-width: 768px) {
+
+      .container {
+        width: 90%;
+        padding: 20px;
+      }
+
+      .row {
+        flex-direction: column;
+      }
+
+      .row input {
+        width: 100%;
+      }
+
+      .logo {
+        width: 70px;
+      }
+
+      h1 {
+        font-size: 20px;
+      }
+    }
+
   </style>
 </head>
 
 <body>
 
+<!-- ===== LOGO (replace logo.png with your file) ===== -->
 <img src="logo.png" class="logo">
 
 <div class="container">
+
+  <!-- ===== TITLE ===== -->
   <h1>Jan Sabha Summit Registration</h1>
 
   <form id="form">
 
-    <input id="name" placeholder="Full Name" required>
-    <input id="year" placeholder="Year / Standard" required>
+    <!-- ===== BASIC INFO ===== -->
+    <div class="row">
+      <input id="name" placeholder="Full Name" required>
+      <input id="year" placeholder="Year / Standard" required>
+    </div>
+
     <input id="college" placeholder="School / College" required>
-    <input id="phone" placeholder="Phone Number" required>
-    <input id="email" placeholder="Email" required>
 
-    <input id="mun_exp" placeholder="MUN Experience">
+    <!-- ===== CONTACT INFO ===== -->
+    <div class="row">
+      <input id="phone" placeholder="Phone Number" required>
+      <input id="email" placeholder="Email" required>
+    </div>
 
+    <!-- ===== MUN DETAILS ===== -->
+    <input id="mun_exp" type="number" placeholder="Number of MUN Experiences">
+
+    <!-- ===== COMMITTEE PREFERENCES ===== -->
     <select id="committee1">
+      <option value="">Committee Preference 1</option>
       <option>UNHRC</option>
       <option>UNSC</option>
       <option>Lok Sabha</option>
+      <option>AIPPM</option>
     </select>
 
     <input id="portfolio1" placeholder="Portfolio Preference 1">
 
     <select id="committee2">
+      <option value="">Committee Preference 2</option>
       <option>UNHRC</option>
       <option>UNSC</option>
       <option>Lok Sabha</option>
+      <option>AIPPM</option>
     </select>
 
     <input id="portfolio2" placeholder="Portfolio Preference 2">
 
-    <input id="payment" placeholder="Paste Payment Screenshot Link">
+    <!-- ===== EXTRA INFO ===== -->
+    <select id="accommodation">
+      <option>Accommodation Required?</option>
+      <option>Yes</option>
+      <option>No</option>
+    </select>
 
-    <button type="submit">Submit</button>
+    <select id="diet">
+      <option>Diet Preference</option>
+      <option>Veg</option>
+      <option>Non-Veg</option>
+    </select>
+
+    <!-- ===== PAYMENT ===== -->
+    <input id="payment" placeholder="Paste Payment Screenshot Link (Drive link)">
+
+    <!-- ===== SUBMIT BUTTON ===== -->
+    <button type="submit">Submit Registration</button>
 
   </form>
+
 </div>
 
 <script>
-document.getElementById("form").addEventListener("submit", async function(e) {
-  e.preventDefault();
 
+document.getElementById("form").addEventListener("submit", async function(e) {
+
+  e.preventDefault(); // prevents page reload
+
+  /* 🔷 PASTE YOUR GOOGLE APPS SCRIPT URL BELOW */
   const scriptURL = "https://script.google.com/macros/s/AKfycbwEAV6O27LnKq_MQ5ePxaTdHS-zGe6FLL84rS9ooZsrj8h8PhCafCtnYDzuzDUp96Qhrg/exec";
 
+  /* 🔷 Collect form data */
   let data = {
-    name: name.value,
-    year: year.value,
-    college: college.value,
-    phone: phone.value,
-    email: email.value,
-    mun_exp: mun_exp.value,
-    committee1: committee1.value,
-    portfolio1: portfolio1.value,
-    committee2: committee2.value,
-    portfolio2: portfolio2.value,
-    payment_link: payment.value
+    name: document.getElementById("name").value,
+    year: document.getElementById("year").value,
+    college: document.getElementById("college").value,
+    phone: document.getElementById("phone").value,
+    email: document.getElementById("email").value,
+    mun_exp: document.getElementById("mun_exp").value,
+    committee1: document.getElementById("committee1").value,
+    portfolio1: document.getElementById("portfolio1").value,
+    committee2: document.getElementById("committee2").value,
+    portfolio2: document.getElementById("portfolio2").value,
+    payment_link: document.getElementById("payment").value
   };
 
-  await fetch(scriptURL, {
-    method: "POST",
-    body: JSON.stringify(data)
-  });
+  try {
+    await fetch(scriptURL, {
+      method: "POST",
+      body: JSON.stringify(data)
+    });
 
-  alert("Submitted!");
+    alert("✅ Registration Successful!");
+    document.getElementById("form").reset();
+
+  } catch (error) {
+    alert("❌ Error submitting form");
+  }
+
 });
+
 </script>
 
 </body>
